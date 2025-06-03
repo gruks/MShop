@@ -22,18 +22,17 @@ A desktop-based Java application designed for **mobile repair shopkeepers** to m
 
 - **Database Name**: `mshop_db`
 - **Tables**:
-  - `customers` – stores customer details
   - `repairs` – stores repair records (device info, issue, cost, status)
-  - `invoices` – stores billing data
 
 You can generate the database structure by running the Java file:
 
-## Fill in your Details
-- Host:     localhost
-- Port:     3306
-- User:     root
-- Password: (your MySQL password)
-
 ```bash
 javac CreateDatabase.java
-java CreateDatabase
+java CreateDatabase.java
+```
+
+You can run the main project by running the Java file:
+
+```bash
+javac mshop.java
+java mshop.java
