@@ -68,6 +68,7 @@ public class mshop extends JFrame {
 					mshop frame = new mshop();
 					frame.setVisible(true);
 					frame.setLocation(200, 0); 
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -282,7 +283,6 @@ public class mshop extends JFrame {
 	        		
 	        		print();
 	        		save();
-	        		
 	        	}
 	        });
 	        btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -307,7 +307,7 @@ public class mshop extends JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Use the new driver
             this.con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3307/mshop", "root", "@estheticSQL"
+                "jdbc:mysql://localhost:3306/mshop", "root", "@estheticSQL1"
             );
             System.out.println("Database connected successfully.");
         } catch (Exception e) {
@@ -376,8 +376,6 @@ public class mshop extends JFrame {
 			pat.setString(10, Due);
 			
 			pat.executeUpdate();
-			
-			JOptionPane.showMessageDialog(this, "Record Added...");
 			
 			txtno.setText("");
 	    	  txtCusName.setText("");

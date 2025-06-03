@@ -30,8 +30,9 @@ public class print extends JFrame {
 			public void run() {
 				try {
 					print frame = new print();
+					frame.setAlwaysOnTop(true);
 					frame.setVisible(true);
-					frame.setLocation(600, 250); 
+					frame.setLocation(0, 0); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

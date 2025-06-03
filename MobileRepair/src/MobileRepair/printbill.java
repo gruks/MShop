@@ -32,8 +32,9 @@ public class printbill extends JFrame {
 			public void run() {
 				try {
 					printbill frame = new printbill();
+					frame.setAlwaysOnTop(true);
 					frame.setVisible(true);
-					frame.setLocation(600, 250);
+					frame.setLocation(0, 0);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

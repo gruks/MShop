@@ -37,7 +37,7 @@ public class bill extends JFrame {
 	String fee;
 	String pay;
 	String due;
-
+	static String bal;
 	/**
 	 * Launch the application.
 	 */
@@ -181,7 +181,7 @@ public class bill extends JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Use the new driver
             this.con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3307/mshop", "root", "@estheticSQL"
+                "jdbc:mysql://localhost:3306/mshop", "root", "@estheticSQL1"
             );
             System.out.println("Database connected successfully.");
         } catch (Exception e) {
@@ -199,27 +199,49 @@ public class bill extends JFrame {
 		String mdue= due;
 		
 		String npay= txtnpay.getText();
-		String bal= txtbalance.getText();
+		bal= txtbalance.getText();
 		
 		new printbill(mrep,mod,msn,mfee,mpay,mdue,npay,bal).setVisible(true);
 	}
-	
 	public void billUpdate() {
-		String rno= repairno;
-		connection();
-		
-		try {
-			pat = con.prepareStatement("UPDATE repair SET STATUS = 'Completed' WHERE repairno = ?");
-			pat.setString(1, repairno);
-			int rowsAffected = pat.executeUpdate(); // Correct method to use for UPDATE
+	    String rno = repairno;
+	    connection();
+
+	    try {
+	        int newPay = Integer.parseInt(txtnpay.getText());
+	        int oldPay = Integer.parseInt(pay);
+	        int updatedPay = oldPay + newPay;
+	        int updatedDue = Integer.parseInt(txtbalance.getText());
+
+	        if (updatedDue == 0) {
+	            // Payment complete
+	            pat = con.prepareStatement(
+	                "UPDATE repair SET pay = ?, due = ?, STATUS = 'Completed' WHERE repairno = ?"
+	            );
+	        } else {
+	            // Partial payment
+	            pat = con.prepareStatement(
+	                "UPDATE repair SET pay = ?, due = ?, STATUS = 'Active' WHERE repairno = ?"
+	            );
+	        }
+
+	        pat.setInt(1, updatedPay);
+	        pat.setInt(2, updatedDue);
+	        pat.setString(3, rno);
+
+	        int rowsAffected = pat.executeUpdate();
 	        System.out.println("Rows updated: " + rowsAffected);
 
 	        if (rowsAffected == 0) {
 	            System.out.println("No record found with repairno: " + rno);
 	        }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	    } catch (SQLException | NumberFormatException e) {
+	        e.printStackTrace();
+	        System.out.println("Update failed.");
+	    }
 	}
-}
+
+	}
+
+
